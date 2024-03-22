@@ -21,8 +21,8 @@ importers:
         specifier: ^4.0.0
         version: 4.1.2
       astro-integration-kit:
-        specifier: ^0.6.0
-        version: 0.6.0(astro@4.1.2)
+        specifier: ^0.7.1
+        version: 0.7.1(astro@4.1.2)
 
   playground:
     dependencies:
@@ -1430,22 +1430,28 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /astro-integration-kit@0.6.0(astro@4.1.2):
-    resolution: {integrity: sha512-BCURops+Is7pRemMG2jo3f8WJRDUBS4mvIeReSDsgAlqep6Rknva9i5vpP5OSs6BLy3nx+nWlCzTQTB/c9hZyg==}
+  /astro-integration-kit@0.7.1(astro@4.1.2):
+    resolution: {integrity: sha512-QiIRvNdESlm7bziuEkWXUJI6uWdQgmeUEOLXkbpuMZrZK8c7DytbGSs3SStpT0b5ITQ1XcDV9r9DAixyW0F2Dg==}
     peerDependencies:
+      '@astrojs/db': ^0.9.0
       '@vitejs/plugin-react': ^4.2.1
       astro: ^4.4.1
       preact: ^10.19.4
       react: ^18.2.0
+      react-dom: ^18.2.0
       solid-js: ^1.8.15
       svelte: ^4.2.11
       vue: ^3.4.19
     peerDependenciesMeta:
+      '@astrojs/db':
+        optional: true
       '@vitejs/plugin-react':
         optional: true
       preact:
         optional: true
       react:
+        optional: true
+      react-dom:
         optional: true
       solid-js:
         optional: true
