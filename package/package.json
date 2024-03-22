@@ -26,7 +26,7 @@
   "scripts": {},
   "type": "module",
   "peerDependencies": {
-    "astro": "^4.0.0"
+    "astro": "^4.5.9"
   },
   "dependencies": {
     "astro-integration-kit": "^0.7.1"
