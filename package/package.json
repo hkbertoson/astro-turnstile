@@ -1,5 +1,5 @@
 {
-  "name": "package-name",
+  "name": "astro-turnstile",
   "version": "0.0.0",
   "description": "TODO:",
   "author": {
@@ -13,7 +13,7 @@
     "astro-component",
     "withastro",
     "astro",
-    "TODO:"
+    "turnstile"
   ],
   "homepage": "TODO:",
   "publishConfig": {
@@ -21,7 +21,10 @@
   },
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "import": "./src/index.ts"
+    },
+    "./verify.astro": "./src/verify.astro"
   },
   "scripts": {},
   "type": "module",
@@ -29,6 +32,7 @@
     "astro": "^4.5.9"
   },
   "dependencies": {
-    "astro-integration-kit": "^0.7.1"
+    "astro-integration-kit": "^0.8.0",
+    "vite": "^5.2.6"
   }
 }
