@@ -1,11 +1,11 @@
 {
   "name": "astro-turnstile",
   "version": "0.0.0",
-  "description": "TODO:",
+  "description": "Astro cloudflare turnstile integration",
   "author": {
     "email": "TODO:",
     "name": "TODO:",
-    "url": "TODO:"
+    "url": "https://github.com/Cyber-Logical-Development/astro-turnstile"
   },
   "license": "MIT",
   "keywords": [
@@ -15,7 +15,7 @@
     "astro",
     "turnstile"
   ],
-  "homepage": "TODO:",
+  "homepage": "https://github.com/Cyber-Logical-Development/astro-turnstile",
   "publishConfig": {
     "access": "public"
   },
