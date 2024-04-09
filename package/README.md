@@ -1,27 +1,39 @@
-# `package-name`
+# `Astro Turnstile`
 
-This is an [Astro integration](https://docs.astro.build/en/guides/integrations-guide/) that TODO:description
+
+This is an [Astro integration](https://docs.astro.build/en/guides/integrations-guide/) that allows you to add a turnstile to your Astro site.
 
 ## Usage
 
 ### Prerequisites
 
-TODO:
+Before you can use this integration, you need to have a Cloudflare account. You can sign up for a free account [here](https://www.cloudflare.com/products/turnstile/).
+
+### Getting Started
+
+First, you need to create a new site in your Cloudflare account. You can do this by following the instructions [here](https://developers.cloudflare.com/turnstile/getting-started/create-site).
+
+Once you have created a site, you will be given a site key and a secret key. You will need this key to configure the integration.
+
 
 ### Installation
 
 Install the integration **automatically** using the Astro CLI:
 
 ```bash
-pnpm astro add package-name
+pnpm astro add astro-turnstile
 ```
 
 ```bash
-npx astro add package-name
+npx astro add astro-turnstile
 ```
 
 ```bash
-yarn astro add package-name
+yarn astro add astro-turnstile
+```
+
+```bun
+bunx astro add astro-turnstile
 ```
 
 Or install it **manually**:
@@ -29,32 +41,39 @@ Or install it **manually**:
 1. Install the required dependencies
 
 ```bash
-pnpm add package-name
+pnpm add astro-turnstile
 ```
 
 ```bash
-npm install package-name
+npm install astro-turnstile
 ```
 
 ```bash
-yarn add package-name
+yarn add astro-turnstile
+```
+
+```bun
+bun add astro-turnstile
 ```
 
 2. Add the integration to your astro config
 
 ```diff
-+import integration from "package-name";
++import astroTurnstile from "astro-turnstile";
 
 export default defineConfig({
   integrations: [
-+    integration(),
++    astroTurnstile(),
   ],
 });
 ```
 
 ### Configuration
 
-TODO:configuration
+You can configure the integration by passing an object to the `astroTurnstile` function. The following options are available:
+
+- `siteKey` (required): Your Turnstile site key
+- `secretKey (required): Your Turnstile secret key - this should be kept secret
 
 ## Contributing
 
@@ -79,8 +98,10 @@ You can now edit files in `package`. Please note that making changes to those fi
 
 ## Licensing
 
-[MIT Licensed](https://github.com/TODO:/blob/main/LICENSE). Made with ❤️ by [TODO:](https://github.com/TODO:).
+[MIT Licensed](https://github.com/hkbertoson/astro-turnstile/blob/main/LICENSE). Made with ❤️ by [Hunter Bertoson](https://github.com/hkbertoson).
 
 ## Acknowledgements
 
-TODO:
+[Astro](https://astro.build/)
+[Turnstile](https://www.cloudflare.com/products/turnstile/)
+[Florian Lefebvre](https://github.com/florian-lefebvre)

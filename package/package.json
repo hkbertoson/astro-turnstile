@@ -1,38 +1,38 @@
 {
-  "name": "astro-turnstile",
-  "version": "0.0.0",
-  "description": "Astro cloudflare turnstile integration",
-  "author": {
-    "email": "TODO:",
-    "name": "TODO:",
-    "url": "https://github.com/Cyber-Logical-Development/astro-turnstile"
-  },
-  "license": "MIT",
-  "keywords": [
-    "astro-integration",
-    "astro-component",
-    "withastro",
-    "astro",
-    "turnstile"
-  ],
-  "homepage": "https://github.com/Cyber-Logical-Development/astro-turnstile",
-  "publishConfig": {
-    "access": "public"
-  },
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./src/index.ts"
-    },
-    "./verify.astro": "./src/verify.astro"
-  },
-  "scripts": {},
-  "type": "module",
-  "peerDependencies": {
-    "astro": "^4.5.17"
-  },
-  "dependencies": {
-    "astro-integration-kit": "^0.9.0",
-    "vite": "^5.2.8"
-  }
+	"name": "astro-turnstile",
+	"version": "0.0.0",
+	"description": "Astro cloudflare turnstile integration",
+	"author": {
+		"email": "dev@hunterbertoson.tech",
+		"name": "Hunter Bertoson",
+		"url": "https://github.com/hkbertoson/astro-turnstile"
+	},
+	"license": "MIT",
+	"keywords": [
+		"astro-integration",
+		"astro-component",
+		"withastro",
+		"astro",
+		"turnstile"
+	],
+	"homepage": "https://github.com/hkbertoson/astro-turnstile",
+	"publishConfig": {
+		"access": "public"
+	},
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"import": "./src/index.ts"
+		},
+		"./verify.astro": "./src/verify.astro"
+	},
+	"scripts": {},
+	"type": "module",
+	"peerDependencies": {
+		"astro": "^4.5.17"
+	},
+	"dependencies": {
+		"astro-integration-kit": "^0.9.0",
+		"vite": "^5.2.8"
+	}
 }

@@ -1,12 +1,24 @@
 import type { APIRoute } from "astro";
 
-import config from 'virtual:astro-turnstile/config';
+import config from "virtual:astro-turnstile/config";
 
-console.log(config);
+const verifyEndpoint =
+	"https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
+const { TURNSTILE_TOKEN } = config;
+const { siteKey } = config.options;
 
-const verifyEndpoint = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+export const POST: APIRoute = async () => {
+	const response = await fetch(verifyEndpoint, {
+		method: "POST",
+		headers: {
+			"content-type": "application/x-www-form-urlencoded",
+		},
+		body: `secret=${encodeURIComponent(
+			TURNSTILE_TOKEN,
+		)}&response=${encodeURIComponent(siteKey)}`,
+	});
+	const data = await response.json();
 
-export const GET: APIRoute = async () => {
-    return new Response(JSON.stringify({config}))
-}
+	return new Response(JSON.stringify(data), { status: response.status });
+};
