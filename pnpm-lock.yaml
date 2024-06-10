@@ -33,8 +33,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(astro@4.5.17)(tailwindcss@3.4.3)
       '@marsidev/react-turnstile':
-        specifier: ^0.5.4
-        version: 0.5.4(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^0.7.1
+        version: 0.7.1(react-dom@18.2.0)(react@18.2.0)
       astro:
         specifier: ^4.5.17
         version: 4.5.17(@types/node@20.12.6)(typescript@5.4.5)
@@ -1182,8 +1182,8 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@marsidev/react-turnstile@0.5.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-cloUDkEcJm+G7p3J8DwPtRNNB2GZqVi/nlIbgu9o3VzNyV5K/bWcSfOyWouRiR3umAQZmsFpR3OFYa4mCmy4AQ==}
+  /@marsidev/react-turnstile@0.7.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-SGa0cweJ2mP1RRi9oJJrlPpZHvlklLqu8tlXDLEbsQ/WExM8Ng9cr9439lZcnu8+tfeVpQIe8qFB1UU5uE+KlQ==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
