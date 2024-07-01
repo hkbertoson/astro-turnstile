@@ -13,7 +13,7 @@
 	"dependencies": {
 		"@astrojs/tailwind": "^5.1.0",
 		"@marsidev/react-turnstile": "^0.5.4",
-		"astro": "^4.5.17",
+		"astro": "^4.11.3",
 		"astro-turnstile": "workspace:*",
 		"tailwindcss": "^3.4.3"
 	},
