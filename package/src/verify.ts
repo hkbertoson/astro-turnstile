@@ -19,6 +19,5 @@ export const POST: APIRoute = async () => {
 		)}&response=${encodeURIComponent(siteKey)}`,
 	});
 	const data = await response.json();
-
-	return new Response(JSON.stringify(data), { status: response.status });
+	return new Response(JSON.stringify(data));
 };
