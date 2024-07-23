@@ -5,9 +5,12 @@ if (Astro.request.method === "POST") {
 		const res = await fetch(new URL("/verify", Astro.url), {
 			method: "POST",
 		});
-		if (res.ok) {
-			console.log("Success");
+
+		const data = await res.json();
+		if (data.success) {
+			return Astro.redirect('/success');
 		}
+		return Astro.redirect('/error');
 	} catch (error) {
 		if (error instanceof Error) {
 			console.error(error.message);
