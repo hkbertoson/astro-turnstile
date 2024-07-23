@@ -12,31 +12,31 @@ if (!TURNSTILE_TOKEN) {
 }
 
 export default defineIntegration({
-	name: "astro-turnstile",
-	optionsSchema: z.object({ siteKey: z.string() }),
-	setup({ options }) {
-		const { resolve } = createResolver(import.meta.url);
-
-		if (!options.siteKey) {
-			throw new Error("Missing siteKey in options");
-		}
+	name: 'astro-turnstile',
+	optionsSchema: z.object({
+		siteKey: z.string(),
+	}),
+	setup({options}) {
 		return {
-			"astro:config:setup"(params) {
-				const { injectRoute } = params;
-				injectRoute({
-					pattern: "/verify",
-					entrypoint: resolve("verify.ts"),
-				});
-				addVirtualImports(params, {
-					name: "virtual:astro-turnstile/config",
-					imports: {
-						"virtual:astro-turnstile/config": `export default ${JSON.stringify({
-							options,
-							TURNSTILE_TOKEN,
-						})}`,
-					},
-				});
-			},
-		};
-	},
-});
+			hooks: {
+				"astro:config:setup"(params) {
+					const { injectRoute } = params;
+					const { resolve } = createResolver(import.meta.url);
+					injectRoute({
+						pattern: "/verify",
+						entrypoint: resolve("verify.ts"),
+					});
+					addVirtualImports(params, {
+						name: "virtual:astro-turnstile/config",
+						imports: {
+							"virtual:astro-turnstile/config": `export default ${JSON.stringify({
+								options,
+								TURNSTILE_TOKEN,
+							})}`,
+						},
+					});
+				},
+			}
+		}
+	}
+})
