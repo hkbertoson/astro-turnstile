@@ -21,8 +21,8 @@ importers:
         specifier: ^4.5.17
         version: 4.5.17(@types/node@20.14.12)(typescript@5.5.4)
       astro-integration-kit:
-        specifier: ^0.13.2
-        version: 0.13.2(astro@4.5.17)
+        specifier: ^0.16.1
+        version: 0.16.1(astro@4.5.17)
       vite:
         specifier: ^5.2.8
         version: 5.2.8(@types/node@20.14.12)
@@ -1627,18 +1627,14 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /astro-integration-kit@0.13.2(astro@4.5.17):
-    resolution: {integrity: sha512-0NkGf91Q+Vgs+Aj70kj8YCMon750llWnv+9TdRWcqrpccjDgt6LtG+wagS7j8CTyBrTiQvvDg3kIdvYNLcu/xg==}
+  /astro-integration-kit@0.16.1(astro@4.5.17):
+    resolution: {integrity: sha512-N/iam0PAFrRT9azYZqscP1HowQhC77Dwlp912P0/72k+kwUVgO3m73F26XXukHYoZBsrHgrUrfsWBxuCH3kEUg==}
     peerDependencies:
-      '@astrojs/db': ^0.9 || ^0.10 || ^0.11
-      astro: ^4.4.1
-    peerDependenciesMeta:
-      '@astrojs/db':
-        optional: true
+      astro: ^4.12.0
     dependencies:
       astro: 4.5.17(@types/node@20.14.12)(typescript@5.5.4)
       pathe: 1.1.2
-      recast: 0.23.6
+      recast: 0.23.9
     dev: false
 
   /astro@4.5.17(@types/node@20.14.12)(typescript@5.5.4):
@@ -4463,8 +4459,8 @@ packages:
     dependencies:
       picomatch: 2.3.1
 
-  /recast@0.23.6:
-    resolution: {integrity: sha512-9FHoNjX1yjuesMwuthAmPKabxYQdOgihFYmT5ebXfYGBcnqXZf3WOVz+5foEZ8Y83P4ZY6yQD5GMmtV+pgCCAQ==}
+  /recast@0.23.9:
+    resolution: {integrity: sha512-Hx/BGIbwj+Des3+xy5uAtAbdCyqK9y9wbBcDFDYanLS9JnMqf7OeF87HQwUimE87OEc72mr6tkKUKMBBL+hF9Q==}
     engines: {node: '>= 4'}
     dependencies:
       ast-types: 0.16.1
