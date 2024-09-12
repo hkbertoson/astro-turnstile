@@ -33,6 +33,6 @@
 	},
 	"dependencies": {
 		"astro-integration-kit": "^0.16.1",
-		"vite": "^5.2.8"
+		"vite": "^5.4.4"
 	}
 }
