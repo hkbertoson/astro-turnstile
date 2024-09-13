@@ -1,7 +1,5 @@
 # `Astro Turnstile`
 
-**THIS PACKAGE IS CURRENTLY IN DEVELOPMENT AND IS NOT YET READY FOR USE**
-
 This is an [Astro integration](https://docs.astro.build/en/guides/integrations-guide/) that allows you to add a turnstile to your Astro site.
 
 ## Usage
