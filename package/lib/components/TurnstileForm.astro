@@ -1,0 +1,153 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import config from "virtual:astro-turnstile/config";
+import { TURNSTILE_SITE_KEY } from "astro:env/client";
+import { AstroError } from "astro/errors";
+
+// Define the props for the TurnstileForm component
+interface Props extends HTMLAttributes<"form"> {
+	action: string;
+	method: string;
+	theme?: "auto" | "light" | "dark";
+	size?: "normal" | "compact" | "flexible";
+	margin?: string;
+}
+
+// Destructure the props and set default values
+const {
+	action,
+	method,
+	theme = "auto",
+	size = "normal",
+	margin: turnstileMargin = "0.5rem",
+	...rest
+} = Astro.props;
+
+// Define the dimensions type for the different sizes
+type Dimensions = { height: string; width: string; minWidth: string };
+
+// Define the sizes object with the different style settings
+type Sizes = Record<string, Dimensions>;
+
+// Define the style settings for the different sizes
+const sizes: Sizes = {
+	normal: { height: "65px", width: "300px", minWidth: "300px" },
+	flexible: { height: "65px", width: "100%", minWidth: "300px" },
+	compact: { height: "140px", width: "150px", minWidth: "150px" },
+};
+
+// Define a function to get the style settings based on set the size
+const getStyleSettings = (size: string): Dimensions => {
+	// Get the style settings based on the size
+	const styleSettings = sizes[size];
+
+	// If the style settings exist, return the style settings
+	if (styleSettings) {
+		return styleSettings;
+	}
+
+	// If the style settings do not exist, throw an error
+	throw new AstroError(
+		`Invalid size: ${size}`,
+		`'size' must be one of the following: ${Object.keys(sizes).join(", ")}.`,
+	);
+};
+
+// Destructure the height, width, and minWidth from the style settings
+const {
+	height: turnstileHeight,
+	width: turnstileWidth,
+	minWidth: turnstileMinWidth,
+} = getStyleSettings(size);
+---
+
+<turnstile-form 
+    data-captcha={config.endpointPath} 
+    data-astrosite={Astro.site}
+    data-theme={theme}
+    data-sitekey={TURNSTILE_SITE_KEY}
+    >
+    <form id="turnstile-captcha-form" action={action} method={method} {...rest}>
+        <slot></slot>
+        <div id="turnstile-captcha"></div>
+        <button type="submit" class="turnstile-submit-button">Submit</button>
+    </form>
+</turnstile-form>
+
+<style scoped define:vars={{ 
+    turnstileHeight,
+    turnstileWidth,
+    turnstileMinWidth,
+    turnstileMargin,
+    }}>
+    #turnstile-captcha {
+        height: var(--turnstileHeight);
+        width: var(--turnstileWidth);
+        min-width: var(--turnstileMinWidth);
+        margin: var(--turnstileMargin);
+    }
+</style>
+
+<script is:inline>
+    // Define the onloadTurnstileCallback function as per the Turnstile documentation
+    // see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget
+    function onloadTurnstileCallback() {
+
+        // Get the Turnstile configuration from the Turnstile form element
+        const { dataset: TConfig} = document.getElementsByTagName('turnstile-form')[0];
+
+        // Render the Turnstile widget with the configuration
+        turnstile.render('#turnstile-captcha', {
+            sitekey: TConfig.sitekey,
+            size: TConfig.size,
+            theme: TConfig.theme,
+        })
+    }
+</script>
+
+<script>
+    // Get the form and Turnstile configuration elements
+    const form = document.getElementById('turnstile-captcha-form') as HTMLFormElement;
+    const { dataset: TConfig } = document.getElementsByTagName('turnstile-form')[0] as HTMLElement;
+
+    // Add an event listener to the form for the submit event
+    form.addEventListener('submit', async (event) => {
+        // Prevent the form from submitting
+        event.preventDefault();
+
+        // Create a new FormData object with the form data
+        const formData = new FormData(form);
+
+        // If the captcha endpoint is not configured, throw an error
+        if (!TConfig.captcha) {
+            throw new Error('Error: Captcha endpoint is not configured')
+        }
+
+        const baseURL = TConfig.astrosite ? TConfig.astrosite : window.location.origin;
+
+        // Create a new URL object with the captcha endpoint
+        const captchaURL = new URL(TConfig.captcha, baseURL);
+
+        // Verify the captcha
+        const captchaVerification = await fetch(captchaURL, {
+            method: 'POST', 
+            body: formData,
+        });
+
+        console.log(JSON.stringify({
+            method: 'POST', 
+            body: formData,
+        }))
+    
+        if (captchaVerification.ok) {
+            // If the captcha verification is successful, submit the form
+            console.log('Captcha verification successful');
+            form.submit();
+            form.reset();
+        } else {
+            // If the captcha verification is unsuccessful, throw an error
+            alert('Captcha verification failed');
+            form.reset();
+        }
+    })
+</script>
