@@ -29,10 +29,10 @@
 	"scripts": {},
 	"type": "module",
 	"peerDependencies": {
-		"astro": "^4.5.17"
+		"astro": "^4.15.6"
 	},
 	"dependencies": {
 		"astro-integration-kit": "^0.16.1",
-		"vite": "^5.4.4"
+		"vite": "^5.4.5"
 	}
 }
