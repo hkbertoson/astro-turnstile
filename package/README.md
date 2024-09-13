@@ -71,10 +71,10 @@ export default defineConfig({
 
 ### Configuration
 
-You can configure the integration by passing an object to the `astroTurnstile` function. The following options are available:
+You will need to add these 2 values to your `.env` file:
 
 - `siteKey` (required): Your Turnstile site key
-- `secretKey (required): Your Turnstile secret key - this should be kept secret
+- `secretKey` (required): Your Turnstile secret key - this should be kept secret
 
 ## Contributing
 
