@@ -1,37 +1,24 @@
 ---
 import Layout from "../layouts/Layout.astro";
-if (Astro.request.method === "POST") {
-	try {
-		const res = await fetch(new URL("/verify", Astro.url), {
-			method: "POST",
-		});
+import { TurnstileForm } from "astro-turnstile:components";
 
-		const data = await res.json();
-		if (data.success) {
-			return Astro.redirect('/success');
-		}
-		return Astro.redirect('/error');
-	} catch (error) {
-		if (error instanceof Error) {
-			console.error(error.message);
-		}
-	}
+if (Astro.request.method === "POST") {
+	console.log("success");
 }
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
-	<form method="POST">
-	<label>
-		Username:
-		<input type="text" name="username" required />
-	</label>
-	<button>Submit</button>
-	</form>
+		<TurnstileForm action="/" method="POST">
+			<label>
+				Username:
+				<input type="text" name="username" required />
+			</label>
+		</TurnstileForm>
 	</main>
 </Layout>
 
-<style>
+<style is:global>
 
 main {
   max-width: 600px;

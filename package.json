@@ -1,9 +1,9 @@
 {
 	"name": "root",
 	"private": true,
-	"packageManager": "pnpm@8.14.1",
+	"packageManager": "pnpm@9.10.0",
 	"engines": {
-		"node": ">=18.19.0"
+		"node": ">=20.10.0"
 	},
 	"scripts": {
 		"playground:dev": "pnpm --filter playground dev",
@@ -13,7 +13,7 @@
 		"lint:fix": "biome check --apply ."
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.8.3",
-		"@changesets/cli": "^2.27.1"
+		"@biomejs/biome": "1.9.0",
+		"@changesets/cli": "^2.27.8"
 	}
 }

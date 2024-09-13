@@ -1,3 +1,3 @@
-import defineIntegration from "./integration.js";
+import astroTurnstile from "./integration.js";
 
-export default defineIntegration;
+export default astroTurnstile;

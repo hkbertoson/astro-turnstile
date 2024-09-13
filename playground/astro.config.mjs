@@ -8,7 +8,7 @@ export default defineConfig({
 	integrations: [
 		tailwind(),
 		astroTurnstile({
-			siteKey: "2x00000000000000000000BB",
+			verbose: true,
 		}),
 	],
 });
