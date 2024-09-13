@@ -37,6 +37,10 @@ import { TurnstileForm } from "astro-turnstile:components";
 				<input type="text" name="username" required />
 			</label>
 		</TurnstileForm>
+		{/* 
+			Note: You do not need to place a submit button in <TurnstileForm> 
+			as there is already one present as part of the component.
+		*/}
 	</main>
 </Layout>
 ```
