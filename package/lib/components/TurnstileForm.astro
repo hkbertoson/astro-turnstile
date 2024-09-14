@@ -1,153 +1,124 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import Widget, { type Props as WidgetProps } from "./TurnstileWidget.astro";
 import config from "virtual:astro-turnstile/config";
-import { TURNSTILE_SITE_KEY } from "astro:env/client";
-import { AstroError } from "astro/errors";
 
-// Define the props for the TurnstileForm component
-interface Props extends HTMLAttributes<"form"> {
-	action: string;
-	method: string;
-	theme?: "auto" | "light" | "dark";
-	size?: "normal" | "compact" | "flexible";
-	margin?: string;
+interface Props extends WidgetProps, HTMLAttributes<"form"> {
+	enctype?:
+		| "multipart/form-data"
+		| "application/x-www-form-urlencoded"
+		| "submit"
+		| undefined;
 }
 
-// Destructure the props and set default values
 const {
+	theme,
+	size,
+	margin,
 	action,
 	method,
-	theme = "auto",
-	size = "normal",
-	margin: turnstileMargin = "0.5rem",
+	enctype = "application/x-www-form-urlencoded",
 	...rest
 } = Astro.props;
 
-// Define the dimensions type for the different sizes
-type Dimensions = { height: string; width: string; minWidth: string };
-
-// Define the sizes object with the different style settings
-type Sizes = Record<string, Dimensions>;
-
-// Define the style settings for the different sizes
-const sizes: Sizes = {
-	normal: { height: "65px", width: "300px", minWidth: "300px" },
-	flexible: { height: "65px", width: "100%", minWidth: "300px" },
-	compact: { height: "140px", width: "150px", minWidth: "150px" },
-};
-
-// Define a function to get the style settings based on set the size
-const getStyleSettings = (size: string): Dimensions => {
-	// Get the style settings based on the size
-	const styleSettings = sizes[size];
-
-	// If the style settings exist, return the style settings
-	if (styleSettings) {
-		return styleSettings;
-	}
-
-	// If the style settings do not exist, throw an error
-	throw new AstroError(
-		`Invalid size: ${size}`,
-		`'size' must be one of the following: ${Object.keys(sizes).join(", ")}.`,
-	);
-};
-
-// Destructure the height, width, and minWidth from the style settings
-const {
-	height: turnstileHeight,
-	width: turnstileWidth,
-	minWidth: turnstileMinWidth,
-} = getStyleSettings(size);
+const siteUrl = Astro.site;
 ---
 
-<turnstile-form 
+<form 
+    id="at-turnstile-captcha-form"
+    data-siteurl={siteUrl} 
     data-captcha={config.endpointPath} 
-    data-astrosite={Astro.site}
-    data-theme={theme}
-    data-sitekey={TURNSTILE_SITE_KEY}
+    action={action}
+    method={method}
+    enctype={enctype}
+    {...rest}
     >
-    <form id="turnstile-captcha-form" action={action} method={method} {...rest}>
-        <slot></slot>
-        <div id="turnstile-captcha"></div>
-        <button type="submit" class="turnstile-submit-button">Submit</button>
-    </form>
-</turnstile-form>
 
-<style scoped define:vars={{ 
-    turnstileHeight,
-    turnstileWidth,
-    turnstileMinWidth,
-    turnstileMargin,
-    }}>
-    #turnstile-captcha {
-        height: var(--turnstileHeight);
-        width: var(--turnstileWidth);
-        min-width: var(--turnstileMinWidth);
-        margin: var(--turnstileMargin);
-    }
-</style>
+    <slot name="header"></slot>
 
-<script is:inline>
-    // Define the onloadTurnstileCallback function as per the Turnstile documentation
-    // see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget
-    function onloadTurnstileCallback() {
+    <slot></slot>
 
-        // Get the Turnstile configuration from the Turnstile form element
-        const { dataset: TConfig} = document.getElementsByTagName('turnstile-form')[0];
+    <Widget theme={theme} size={size} margin={margin} />
 
-        // Render the Turnstile widget with the configuration
-        turnstile.render('#turnstile-captcha', {
-            sitekey: TConfig.sitekey,
-            size: TConfig.size,
-            theme: TConfig.theme,
-        })
-    }
-</script>
+    <slot name="buttons">
+        <button type="submit" class="at-turnstile-submit-button">Submit</button>
+    </slot>
+    
+    <slot name="footer"></slot>
+
+</form>
 
 <script>
-    // Get the form and Turnstile configuration elements
-    const form = document.getElementById('turnstile-captcha-form') as HTMLFormElement;
-    const { dataset: TConfig } = document.getElementsByTagName('turnstile-form')[0] as HTMLElement;
+    // Get the form element
+    const form = document.getElementById("at-turnstile-captcha-form") as HTMLFormElement;
 
-    // Add an event listener to the form for the submit event
-    form.addEventListener('submit', async (event) => {
-        // Prevent the form from submitting
+    const turnstileConfig = form.dataset;
+
+    // Add a submit event listener to the form
+    form.addEventListener("submit", async (event) => {
+        // Prevent the default form submission
         event.preventDefault();
 
-        // Create a new FormData object with the form data
-        const formData = new FormData(form);
+        // Get the form data
+        const formData = new FormData(form); // "multipart/form-data"
 
-        // If the captcha endpoint is not configured, throw an error
-        if (!TConfig.captcha) {
-            throw new Error('Error: Captcha endpoint is not configured')
-        }
-
-        const baseURL = TConfig.astrosite ? TConfig.astrosite : window.location.origin;
-
-        // Create a new URL object with the captcha endpoint
-        const captchaURL = new URL(TConfig.captcha, baseURL);
-
-        // Verify the captcha
-        const captchaVerification = await fetch(captchaURL, {
-            method: 'POST', 
-            body: formData,
+        const urlEncodedFormData = new URLSearchParams(); // "application/x-www-form-urlencoded"
+        formData.forEach((value, key) => {
+            if (typeof value === "string") {
+                urlEncodedFormData.append(key, value);
+            } else {
+                console.warn(`Invalid form data value for key: ${key}, Skipping...`);
+            }
         });
 
-        console.log(JSON.stringify({
-            method: 'POST', 
+        if (!turnstileConfig.captcha) {
+            console.error("No Turnstile endpoint path provided.");
+            return;
+        }
+
+        // Send the form data to the Turnstile endpoint for verification
+        const baseUrlToUse = turnstileConfig.siteurl 
+            ? turnstileConfig.siteurl 
+            : window.location.origin;
+
+        const verificationUrl = new URL(turnstileConfig.captcha, baseUrlToUse);
+
+        const captchaResponse = await fetch(verificationUrl, {
+            method: "POST",
             body: formData,
-        }))
-    
-        if (captchaVerification.ok) {
-            // If the captcha verification is successful, submit the form
-            console.log('Captcha verification successful');
-            form.submit();
-            form.reset();
-        } else {
-            // If the captcha verification is unsuccessful, throw an error
-            alert('Captcha verification failed');
+        })
+
+        if (captchaResponse.status !== 200) {
+            console.error(captchaResponse.statusText);
             form.reset();
         }
-    })
+
+        if (form.enctype === "application/x-www-form-urlencoded") {
+            fetch(form.action, {
+                method: form.method,
+                body: urlEncodedFormData,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            })
+            form.reset();
+        }
+
+        // If the captcha verification is successful, submit the form
+        if (form.enctype === "multipart/form-data") {
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            form.reset();
+        }
+
+        if (form.enctype === "submit") {
+            form.submit();
+            form.reset();
+        }
+})
 </script>
