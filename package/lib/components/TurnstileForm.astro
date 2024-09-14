@@ -91,6 +91,7 @@ const siteUrl = Astro.site;
         if (captchaResponse.status !== 200) {
             console.error(captchaResponse.statusText);
             form.reset();
+            return;
         }
 
         if (form.enctype === "application/x-www-form-urlencoded") {
@@ -102,6 +103,7 @@ const siteUrl = Astro.site;
                 },
             })
             form.reset();
+            return;
         }
 
         // If the captcha verification is successful, submit the form
@@ -114,11 +116,13 @@ const siteUrl = Astro.site;
                 },
             })
             form.reset();
+            return;
         }
 
         if (form.enctype === "submit") {
             form.submit();
             form.reset();
+            return;
         }
 })
 </script>
