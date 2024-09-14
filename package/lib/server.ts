@@ -1,6 +1,9 @@
 import { TURNSTILE_SECRET_KEY } from "astro:env/server";
 import type { APIRoute } from "astro";
 
+// Ensure this route is not prerendered by Astro
+export const prerender = false;
+
 /**
  * The Astro-Turnstile API endpoint for verifying tokens.
  */
@@ -14,10 +17,10 @@ export const POST: APIRoute = async ({ request }) => {
 
 	// Ensure the secret key and token are present
 	if (!TURNSTILE_SECRET_KEY || !turnstileToken) {
-		console.log("Missing secret key or token");
-		return new Response("Missing secret key or token", {
+		return new Response(null, {
 			status: 400,
-			statusText: "bad request",
+			statusText:
+				"[Astro-Turnstile] Missing secret key or token, please contact the site administrator",
 		});
 	}
 
@@ -45,16 +48,16 @@ export const POST: APIRoute = async ({ request }) => {
 
 	// Return the outcome
 	if (outcome.success) {
-		return new Response("Token verification successful", {
+		return new Response(null, {
 			status: 200,
-			statusText: "ok",
+			statusText: "[Astro-Turnstile] Token verification successful",
 		});
 	}
 
 	// Return an error message if the token is invalid
-	return new Response("Unable to verify token", {
+	return new Response(null, {
 		status: 400,
-		statusText: "bad request",
+		statusText: "[Astro-Turnstile] Unable to verify token",
 	});
 };
 
@@ -63,8 +66,14 @@ export const POST: APIRoute = async ({ request }) => {
  */
 export const ALL: APIRoute = async () => {
 	// Return a 405 error for all other requests than POST
-	return new Response("Method not allowed", {
-		status: 405,
-		statusText: "method not allowed",
-	});
+	return new Response(
+		JSON.stringify({ error: "Method not allowed" }, null, 2),
+		{
+			status: 405,
+			statusText: "method not allowed",
+			headers: {
+				"content-type": "application/json",
+			},
+		},
+	);
 };

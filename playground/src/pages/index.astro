@@ -9,7 +9,7 @@ if (Astro.request.method === "POST") {
 
 <Layout title="Welcome to Astro.">
 	<main>
-		<TurnstileForm action="/" method="POST">
+		<TurnstileForm action="/" method={'POST'} enctype={'submit'}>
 			<label>
 				Username:
 				<input type="text" name="username" required />
