@@ -1,5 +1,11 @@
 # astro-turnstile
 
+## 1.1.1
+
+### Patch Changes
+
+- 2c91682: Updated readme
+
 ## 1.1.0
 
 ### Minor Changes

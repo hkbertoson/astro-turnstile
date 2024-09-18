@@ -1,6 +1,6 @@
 {
 	"name": "astro-turnstile",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Astro cloudflare turnstile integration",
 	"author": {
 		"email": "dev@hunterbertoson.tech",
