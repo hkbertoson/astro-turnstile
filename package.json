@@ -9,6 +9,8 @@
 		"playground:dev": "pnpm --filter playground dev",
 		"changeset": "changeset",
 		"release": "node scripts/release.mjs",
+		"ci:version": "pnpm changeset version",
+		"ci:publish": "pnpm changeset publish",
 		"lint": "biome check .",
 		"lint:fix": "biome check --apply ."
 	},
