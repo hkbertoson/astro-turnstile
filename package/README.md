@@ -14,7 +14,6 @@ First, you need to create a new site in your Cloudflare account. You can do this
 
 Once you have created a site, you will be given a site key and a secret key. You will need this key to configure the integration.
 
-
 ### Installation
 
 Install the integration **automatically** using the Astro CLI:
