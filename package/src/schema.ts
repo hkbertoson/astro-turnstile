@@ -109,4 +109,4 @@ export const AstroTurnstileOptionsSchema = z
 /**
  * Astro-Turnstile configuration options type.
  */
-export type AstroTurnstileOptions = z.infer<typeof AstroTurnstileOptionsSchema>;
+export type AstroTurnstileOptions = typeof AstroTurnstileOptionsSchema._input;
