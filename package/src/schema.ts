@@ -110,3 +110,8 @@ export const AstroTurnstileOptionsSchema = z
  * Astro-Turnstile configuration options type.
  */
 export type AstroTurnstileOptions = typeof AstroTurnstileOptionsSchema._input;
+
+/**
+ * Astro-Turnstile configuration options type used by the `virtual:astro-turnstile/config` module.
+ */
+export type AstroTurnstileConfig = z.infer<typeof AstroTurnstileOptionsSchema>;

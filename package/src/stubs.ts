@@ -12,7 +12,7 @@ config.addSingleLineNote(
 // Add the module to the file
 config.addModule("virtual:astro-turnstile/config", {
 	defaultExport: {
-		typeDef: `import("${name}/schema").AstroTurnstileOptions`,
+		typeDef: `import("${name}/schema").AstroTurnstileConfig`,
 		singleLineDescription: "The Turnstile configuration options",
 	},
 });
