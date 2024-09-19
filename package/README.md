@@ -68,10 +68,80 @@ export default defineConfig({
 
 ### Configuration
 
+#### `.env` File
+
 You will need to add these 2 values to your `.env` file:
 
-- `siteKey` (required): Your Turnstile site key
-- `secretKey` (required): Your Turnstile secret key - this should be kept secret
+- `TURNSTILE_SITE_KEY` (required): Your Turnstile site key
+- `TURNSTILE_SECRET_KEY` (required): Your Turnstile secret key - this should be kept secret
+
+#### Astro Config Options
+
+**`verbose`**
+- Type: `boolean`
+- Default: `false`
+
+Enable verbose logging.
+
+**`disableClientScript`**
+- Type: `boolean`
+- Default: `false`
+
+Disable the client-side script injection.
+
+By default, the client-side script is injected into the Astro project on every page. In some cases, you may want to disable this behavior, and manually inject the script where needed. This option allows you to disable the client-side script injection.
+
+Note: If you disable the client-side script injection, you will need to manually inject the Turnstile client-side script into your Astro project.
+
+**`disableDevToolbar`**
+- Type: `boolean`
+- Default: `false`
+
+Disable the Astro Turnstile Dev Toolbar App.
+
+**`endpointPath`**
+- Type: `string`
+- Default: `/verify`
+
+The path to the injected Turnstile API endpoint.
+
+### Usage
+
+The following components are made available to the end user:
+
+- **`TurnstileWidget`** - The main widget component for displaying the Turnstile captcha field in forms
+  - Available Props:
+    - **`theme`**: 
+      - Type: `"auto"` | `"light"` | `"dark"` | `undefined`
+      - Default: `"auto"`
+    - **`size`**: 
+      - Type: `"normal"` | `"compact"` | `"flexible"` | `undefined`
+      - Default: `"normal"`
+    - **`margin`**: 
+      - Type: `string` | `undefined`
+      - Default: `"0.5rem"`
+
+- `TurnstileForm` - A helper form element that assists you in building your forms with Turnstile verification built in
+  - Available Props:
+    - (All the props from Widget)
+    - **`enctype`**
+      - Type: `"multipart/form-data"` | `"application/x-www-form-urlencoded"` | `"submit"` | `undefined`
+      - Default: `"application/x-www-form-urlencoded"`
+    - **`action`**
+      - Type: `string` | `null` | `undefined`
+    - **`method`**
+      - Type: `string` | `null` | `undefined`
+
+These components can be accessed by either of the following methods:
+
+```ts
+// Option 1: Runtime virtual module
+import { TurnstileWidget, TurnstileForm } from 'astro-turnstile:components';
+
+// Option 2: Direct package exports
+import { TurnstileWidget, TurnstileForm } from 'astro-turnstile/components';
+
+```
 
 ## Contributing
 
