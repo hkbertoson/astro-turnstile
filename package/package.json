@@ -1,6 +1,6 @@
 {
 	"name": "astro-turnstile",
-	"version": "1.1.2",
+	"version": "1.2.0",
 	"description": "Astro cloudflare turnstile integration",
 	"author": {
 		"email": "dev@hunterbertoson.tech",
@@ -20,7 +20,10 @@
 		"access": "public"
 	},
 	"sideEffects": false,
-	"files": ["src", "lib"],
+	"files": [
+		"src",
+		"lib"
+	],
 	"exports": {
 		".": {
 			"types": "./src/index.d.ts",
