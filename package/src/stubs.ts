@@ -26,45 +26,45 @@ components.addSingleLineNote(
 );
 
 // Add the module to the file
-components.addModule("astro-turnstile:components", {
-	namedExports: [
-		{
-			name: "TurnstileWidget",
-			typeDef: `typeof import('${name}/components/TurnstileWidget.astro').TurnstileWidget`,
-			multiLineDescription: [
-				"# Turnstile Verification Widget",
-				"@description An [Astro](https://astro.build) component that is used to render a Turnstile verification widget. This widget is used to verify that a user is human.",
-				`@param {"auto"|"light"|"dark"} theme - The theme for the widget. (default: "auto")`,
-				`@param {"normal"|"compact"|"flexible"} size - The size for the widget. (default: "normal")`,
-				`@param {string} margin - The margin for the widget element. (default: '0.5rem')`,
-				"@example",
-				"```tsx",
-				"---",
-				`import { TurnstileWidget } from '${name}:components';`,
-				"---",
-				"<form action='/your/api/endpoint' method='POST'>",
-				"<TurnstileWidget theme='light' size='compact' margin='1rem' />",
-				"<button type='submit'>Submit</button>",
-				"</form>",
-			],
-		},
-		{
-			name: "TurnstileForm",
-			typeDef: `typeof import('${name}/components/TurnstileForm.astro').TurnstileForm`,
-			multiLineDescription: [
-				"# Turnstile Verification Form",
-				"@description An [Astro](https://astro.build) component that is used to render a Turnstile verification form. This form includes a Turnstile verification widget and a submit button.",
-				"@slot default - Any unassigned content will be placed here.",
-				"@slot header - `<div slot='header'>...</div>`",
-				"@slot buttons - `<div slot='buttons'>...</div>`",
-				"@slot footer - `<div slot='footer'>...</div>`",
-				`@param {"auto"|"light"|"dark"} theme - The theme for the widget. (default: "auto")`,
-				`@param {"normal"|"compact"|"flexible"} size - The size for the widget. (default: "normal")`,
-				`@param {string} margin - The margin for the widget element. (default: '0.5rem')`,
-				`@param {"multipart/form-data"|"application/x-www-form-urlencoded"|"submit"} enctype - The form enctype. (default: 'application/x-www-form-urlencoded')`,
-			],
-		},
-	],
+components.addModule("astro-turnstile:components/TurnstileWidget", {
+	defaultExport: {
+		typeDef: `typeof import('${name}/components/TurnstileWidget.astro').TurnstileWidget`,
+		multiLineDescription: [
+			"# Turnstile Verification Widget",
+			"@description An [Astro](https://astro.build) component that is used to render a Turnstile verification widget. This widget is used to verify that a user is human.",
+			`@param {"auto"|"light"|"dark"} theme - The theme for the widget. (default: "auto")`,
+			`@param {"normal"|"compact"|"flexible"} size - The size for the widget. (default: "normal")`,
+			`@param {string} margin - The margin for the widget element. (default: '0.5rem')`,
+			"@example",
+			"```tsx",
+			"---",
+			`import TurnstileWidget from '${name}:components/TurnstileWidget';`,
+			"---",
+			"<form action='/your/api/endpoint' method='POST'>",
+			"<TurnstileWidget theme='light' size='compact' margin='1rem' />",
+			"<button type='submit'>Submit</button>",
+			"</form>",
+		],
+	},
+});
+
+// Add the module to the file
+components.addModule("astro-turnstile:components/TurnstileForm", {
+	defaultExport: {
+		typeDef: `typeof import('${name}/components/TurnstileForm.astro').TurnstileForm`,
+		multiLineDescription: [
+			"# Turnstile Verification Form",
+			"@description An [Astro](https://astro.build) component that is used to render a Turnstile verification form. This form includes a Turnstile verification widget and a submit button.",
+			"@slot default - Any unassigned content will be placed here.",
+			"@slot header - `<div slot='header'>...</div>`",
+			"@slot buttons - `<div slot='buttons'>...</div>`",
+			"@slot footer - `<div slot='footer'>...</div>`",
+			`@param {"auto"|"light"|"dark"} theme - The theme for the widget. (default: "auto")`,
+			`@param {"normal"|"compact"|"flexible"} size - The size for the widget. (default: "normal")`,
+			`@param {string} margin - The margin for the widget element. (default: '0.5rem')`,
+			`@param {"multipart/form-data"|"application/x-www-form-urlencoded"|"submit"} enctype - The form enctype. (default: 'application/x-www-form-urlencoded')`,
+		],
+	},
 });
 
 // Export the DTS files

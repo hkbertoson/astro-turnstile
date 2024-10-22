@@ -148,8 +148,8 @@ export const astroTurnstile = defineIntegration({
 							"virtual:astro-turnstile/config": `export default ${JSON.stringify(
 								options,
 							)}`,
-							"astro-turnstile:components/TurnstileWidget": `export * from '${name}/components';`,
-							"astro-turnstile:components/TurnstileForm": `export * from '${name}/components';`,
+							"astro-turnstile:components/TurnstileWidget": `import Widget from '${name}/components/TurnstileWidget'; export default Widget;`,
+							"astro-turnstile:components/TurnstileForm": `import Form from '${name}/components/TurnstileForm'; export default Form;`,
 						},
 					});
 

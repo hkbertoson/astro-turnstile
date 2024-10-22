@@ -1,57 +1,68 @@
 ---
-import TurnstileForm from "astro-turnstile/components/TurnstileForm";
-import Layout from "../layouts/Layout.astro";
+import TurnstileForm from 'astro-turnstile/components/TurnstileForm';
+import Layout from '../layouts/Layout.astro';
+import TurnstileWidget from 'astro-turnstile:components/TurnstileWidget';
 
-if (Astro.request.method === "POST") {
-	console.log("success");
+if (Astro.request.method === 'POST') {
+	console.log('success');
 }
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
+		<form>
+			<label>
+				Username:
+				<input type="text" name="username" required />
+			</label>
+			<button type="submit">Submit</button>
+			<TurnstileWidget />
+		</form>
+		<!-- <main>
 		<TurnstileForm action="/" method={'POST'} enctype={'submit'}>
 			<label>
 				Username:
 				<input type="text" name="username" required />
 			</label>
 		</TurnstileForm>
+	</main> -->
 	</main>
+
+	<style is:global>
+		main {
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+		}
+
+		label {
+			margin-bottom: 10px;
+		}
+
+		input[type='text'] {
+			padding: 8px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		button {
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+	</style>
 </Layout>
-
-<style is:global>
-	main {
-		max-width: 600px;
-		margin: 0 auto;
-		padding: 20px;
-	}
-
-	form {
-		display: flex;
-		flex-direction: column;
-	}
-
-	label {
-		margin-bottom: 10px;
-	}
-
-	input[type='text'] {
-		padding: 8px;
-		font-size: 16px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-	}
-
-	button {
-		padding: 10px 20px;
-		background-color: #007bff;
-		color: white;
-		border: none;
-		border-radius: 4px;
-		cursor: pointer;
-		font-size: 16px;
-	}
-
-	button:hover {
-		background-color: #0056b3;
-	}
-</style>
