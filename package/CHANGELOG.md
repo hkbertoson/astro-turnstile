@@ -1,5 +1,33 @@
 # astro-turnstile
 
+## 1.2.0
+
+### Minor Changes
+
+- 9921553: Changeset for Type Updates
+- 508f6ad: Refactored component imports for TurnstileWidget and TurnstileForm:
+  BREAKING: Direct package imports from 'astro-turnstile/components/TurnstileWidget' and 'astro-turnstile/components/TurnstileForm'.
+
+  ```ts
+  // Previously
+  import { TurnstileForm } from "astro-turnstile/components";
+  import { TurnstileWidget } from "astro-turnstile/components";
+
+  // Virtual modules Before
+  import { TurnstileForm } from "astro-turnstile:components";
+  import { TurnstileWidget } from "astro-turnstile:components";
+
+  // Now
+  import TurnstileForm from "astro-turnstile/components/TurnstileForm";
+  import TurnstileWidget from "astro-turnstile/components/TurnstileWidget";
+
+  // Virtual modules now
+  import TurnstileForm from "astro-turnstile:components/TurnstileForm";
+  import TurnstileWidget from "astro-turnstile:components/TurnstileWidget";
+  ```
+
+- 16ae506: Updated Imports
+
 ## 1.1.2
 
 ### Patch Changes
