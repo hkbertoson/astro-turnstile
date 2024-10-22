@@ -29,8 +29,8 @@
 		"./schema": "./src/schema.ts",
 		"./client": "./lib/client.ts",
 		"./server": "./lib/server.ts",
-		"./components/TurnstileWidget": "./lib/components/TurnstileWidget.astro",
-		"./components/TurnstileForm": "./lib/components/TurnstileForm.astro"
+		"./components/TurnstileWidget": "./lib/components/TurnstileWidget",
+		"./components/TurnstileForm": "./lib/components/TurnstileForm"
 	},
 	"scripts": {},
 	"type": "module",
