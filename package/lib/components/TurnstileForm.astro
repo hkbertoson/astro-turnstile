@@ -1,7 +1,7 @@
 ---
+import config from "virtual:astro-turnstile/config";
 import type { HTMLAttributes } from "astro/types";
 import Widget, { type Props as WidgetProps } from "./TurnstileWidget.astro";
-import config from "virtual:astro-turnstile/config";
 
 interface Props extends WidgetProps, HTMLAttributes<"form"> {
 	enctype?:
@@ -24,105 +24,107 @@ const {
 const siteUrl = Astro.site;
 ---
 
-<form 
-    id="at-turnstile-captcha-form"
-    data-siteurl={siteUrl} 
-    data-captcha={config.endpointPath} 
-    action={action}
-    method={method}
-    enctype={enctype}
-    {...rest}
-    >
+<form
+	id="at-turnstile-captcha-form"
+	data-siteurl={siteUrl}
+	data-captcha={config.endpointPath}
+	action={action}
+	method={method}
+	enctype={enctype}
+	{...rest}
+>
+	<slot name="header" />
 
-    <slot name="header"></slot>
+	<slot />
 
-    <slot></slot>
+	<Widget theme={theme} size={size} margin={margin} />
 
-    <Widget theme={theme} size={size} margin={margin} />
+	<slot name="buttons">
+		<button type="submit" class="at-turnstile-submit-button">Submit</button>
+	</slot>
 
-    <slot name="buttons">
-        <button type="submit" class="at-turnstile-submit-button">Submit</button>
-    </slot>
-    
-    <slot name="footer"></slot>
-
+	<slot name="footer" />
 </form>
 
 <script>
-    // Get the form element
-    const form = document.getElementById("at-turnstile-captcha-form") as HTMLFormElement;
+	// Get the form element
+	const form = document.getElementById(
+		'at-turnstile-captcha-form',
+	) as HTMLFormElement;
 
-    const turnstileConfig = form.dataset;
+	const turnstileConfig = form.dataset;
 
-    // Add a submit event listener to the form
-    form.addEventListener("submit", async (event) => {
-        // Prevent the default form submission
-        event.preventDefault();
+	// Add a submit event listener to the form
+	form.addEventListener('submit', async (event) => {
+		// Prevent the default form submission
+		event.preventDefault();
 
-        // Get the form data
-        const formData = new FormData(form); // "multipart/form-data"
+		// Get the form data
+		const formData = new FormData(form); // "multipart/form-data"
 
-        const urlEncodedFormData = new URLSearchParams(); // "application/x-www-form-urlencoded"
-        formData.forEach((value, key) => {
-            if (typeof value === "string") {
-                urlEncodedFormData.append(key, value);
-            } else {
-                console.warn(`Invalid form data value for key: ${key}, Skipping...`);
-            }
-        });
+		const urlEncodedFormData = new URLSearchParams(); // "application/x-www-form-urlencoded"
+		formData.forEach((value, key) => {
+			if (typeof value === 'string') {
+				urlEncodedFormData.append(key, value);
+			} else {
+				console.warn(
+					`Invalid form data value for key: ${key}, Skipping...`,
+				);
+			}
+		});
 
-        if (!turnstileConfig.captcha) {
-            console.error("No Turnstile endpoint path provided.");
-            return;
-        }
+		if (!turnstileConfig.captcha) {
+			console.error('No Turnstile endpoint path provided.');
+			return;
+		}
 
-        // Send the form data to the Turnstile endpoint for verification
-        const baseUrlToUse = turnstileConfig.siteurl 
-            ? turnstileConfig.siteurl 
-            : window.location.origin;
+		// Send the form data to the Turnstile endpoint for verification
+		const baseUrlToUse = turnstileConfig.siteurl
+			? turnstileConfig.siteurl
+			: window.location.origin;
 
-        const verificationUrl = new URL(turnstileConfig.captcha, baseUrlToUse);
+		const verificationUrl = new URL(turnstileConfig.captcha, baseUrlToUse);
 
-        const captchaResponse = await fetch(verificationUrl, {
-            method: "POST",
-            body: formData,
-        })
+		const captchaResponse = await fetch(verificationUrl, {
+			method: 'POST',
+			body: formData,
+		});
 
-        if (captchaResponse.status !== 200) {
-            console.error(captchaResponse.statusText);
-            form.reset();
-            return;
-        }
+		if (captchaResponse.status !== 200) {
+			console.error(captchaResponse.statusText);
+			form.reset();
+			return;
+		}
 
-        if (form.enctype === "application/x-www-form-urlencoded") {
-            fetch(form.action, {
-                method: form.method,
-                body: urlEncodedFormData,
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            })
-            form.reset();
-            return;
-        }
+		if (form.enctype === 'application/x-www-form-urlencoded') {
+			fetch(form.action, {
+				method: form.method,
+				body: urlEncodedFormData,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+			});
+			form.reset();
+			return;
+		}
 
-        // If the captcha verification is successful, submit the form
-        if (form.enctype === "multipart/form-data") {
-            fetch(form.action, {
-                method: form.method,
-                body: formData,
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            form.reset();
-            return;
-        }
+		// If the captcha verification is successful, submit the form
+		if (form.enctype === 'multipart/form-data') {
+			fetch(form.action, {
+				method: form.method,
+				body: formData,
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			});
+			form.reset();
+			return;
+		}
 
-        if (form.enctype === "submit") {
-            form.submit();
-            form.reset();
-            return;
-        }
-})
+		if (form.enctype === 'submit') {
+			form.submit();
+			form.reset();
+			return;
+		}
+	});
 </script>

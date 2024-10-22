@@ -136,10 +136,12 @@ These components can be accessed by either of the following methods:
 
 ```ts
 // Option 1: Runtime virtual module
-import { TurnstileWidget, TurnstileForm } from 'astro-turnstile:components';
+import TurnstileWidget from 'astro-turnstile:components/TurnstileWidget';
+import TurnstileForm from 'astro-turnstile:components/TurnstileForm';
 
 // Option 2: Direct package exports
-import { TurnstileWidget, TurnstileForm } from 'astro-turnstile/components';
+import TurnstileWidget from 'astro-turnstile/components/TurnstileWidget';
+import TurnstileForm from 'astro-turnstile/components/TurnstileForm';
 
 ```
 

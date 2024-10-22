@@ -1,5 +1,5 @@
-import tailwind from "@astrojs/tailwind";
 import node from "@astrojs/node";
+import tailwind from "@astrojs/tailwind";
 import astroTurnstile from "astro-turnstile";
 import { defineConfig } from "astro/config";
 

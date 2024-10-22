@@ -1,5 +1,5 @@
-import { defineToolbarApp } from "astro/toolbar";
 import { TURNSTILE_SITE_KEY } from "astro:env/client";
+import { defineToolbarApp } from "astro/toolbar";
 
 // Define the SVG icons for the app
 const svgIcons = {

@@ -1,15 +1,15 @@
 import {
-	createResolver,
 	addVirtualImports,
+	createResolver,
 	defineIntegration,
 } from "astro-integration-kit";
-import { AstroTurnstileOptionsSchema as optionsSchema } from "./schema.ts";
-import { name } from "../package.json";
 import { envField } from "astro/config";
-import Dts from "./stubs.ts";
-import { envDefaults, ErrorMessages, loggerStrings } from "./strings.ts";
-import { loadEnv } from "vite";
 import { AstroError } from "astro/errors";
+import { loadEnv } from "vite";
+import { name } from "../package.json";
+import { AstroTurnstileOptionsSchema as optionsSchema } from "./schema.ts";
+import { ErrorMessages, envDefaults, loggerStrings } from "./strings.ts";
+import Dts from "./stubs.ts";
 
 // Load the Turnstile environment variables for the Server runtime and Verification
 // that the environment variables are NOT set to Turnstile demo values during build.
@@ -148,7 +148,8 @@ export const astroTurnstile = defineIntegration({
 							"virtual:astro-turnstile/config": `export default ${JSON.stringify(
 								options,
 							)}`,
-							"astro-turnstile:components": `export * from '${name}/components';`,
+							"astro-turnstile:components/TurnstileWidget": `export * from '${name}/components';`,
+							"astro-turnstile:components/TurnstileForm": `export * from '${name}/components';`,
 						},
 					});
 

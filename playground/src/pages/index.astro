@@ -1,6 +1,6 @@
 ---
+import TurnstileForm from "astro-turnstile/components/TurnstileForm";
 import Layout from "../layouts/Layout.astro";
-import { TurnstileForm } from "astro-turnstile:components";
 
 if (Astro.request.method === "POST") {
 	console.log("success");
@@ -19,41 +19,39 @@ if (Astro.request.method === "POST") {
 </Layout>
 
 <style is:global>
+	main {
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 20px;
+	}
 
-main {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
+	form {
+		display: flex;
+		flex-direction: column;
+	}
 
-form {
-  display: flex;
-  flex-direction: column;
-}
+	label {
+		margin-bottom: 10px;
+	}
 
-label {
-  margin-bottom: 10px;
-}
+	input[type='text'] {
+		padding: 8px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
 
-input[type="text"] {
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+	button {
+		padding: 10px 20px;
+		background-color: #007bff;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 16px;
+	}
 
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
+	button:hover {
+		background-color: #0056b3;
+	}
 </style>
-

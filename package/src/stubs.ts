@@ -30,7 +30,7 @@ components.addModule("astro-turnstile:components", {
 	namedExports: [
 		{
 			name: "TurnstileWidget",
-			typeDef: `typeof import('${name}/components').TurnstileWidget`,
+			typeDef: `typeof import('${name}/components/TurnstileWidget.astro').TurnstileWidget`,
 			multiLineDescription: [
 				"# Turnstile Verification Widget",
 				"@description An [Astro](https://astro.build) component that is used to render a Turnstile verification widget. This widget is used to verify that a user is human.",
@@ -50,7 +50,7 @@ components.addModule("astro-turnstile:components", {
 		},
 		{
 			name: "TurnstileForm",
-			typeDef: `typeof import('${name}/components').TurnstileForm`,
+			typeDef: `typeof import('${name}/components/TurnstileForm.astro').TurnstileForm`,
 			multiLineDescription: [
 				"# Turnstile Verification Form",
 				"@description An [Astro](https://astro.build) component that is used to render a Turnstile verification form. This form includes a Turnstile verification widget and a submit button.",

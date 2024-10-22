@@ -20,10 +20,7 @@
 		"access": "public"
 	},
 	"sideEffects": false,
-	"files": [
-		"src",
-		"lib"
-	],
+	"files": ["src", "lib"],
 	"exports": {
 		".": {
 			"types": "./src/index.d.ts",
@@ -32,7 +29,8 @@
 		"./schema": "./src/schema.ts",
 		"./client": "./lib/client.ts",
 		"./server": "./lib/server.ts",
-		"./components": "./lib/components/index.ts"
+		"./components/TurnstileWidget": "./lib/components/TurnstileWidget.astro",
+		"./components/TurnstileForm": "./lib/components/TurnstileForm.astro"
 	},
 	"scripts": {},
 	"type": "module",
