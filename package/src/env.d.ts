@@ -1,1 +1,1 @@
-/// <reference types="../../playground/src/env.d.ts" />
+/// <reference types="../../.astro/types.d.ts" />
