@@ -1,5 +1,11 @@
 # astro-turnstile
 
+## 2.0.1
+
+### Patch Changes
+
+- 8de5ce3: Button Update
+
 ## 2.0.0
 
 ### Major Changes
