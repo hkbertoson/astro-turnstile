@@ -49,7 +49,7 @@ const siteUrl = Astro.site;
 <script>
 	// Get the form element
 	const form = document.getElementById(
-		'at-turnstile-captcha-form',
+		'at-turnstile-captcha-form'
 	) as HTMLFormElement;
 
 	const turnstileConfig = form.dataset;
@@ -67,9 +67,7 @@ const siteUrl = Astro.site;
 			if (typeof value === 'string') {
 				urlEncodedFormData.append(key, value);
 			} else {
-				console.warn(
-					`Invalid form data value for key: ${key}, Skipping...`,
-				);
+				console.warn(`Invalid form data value for key: ${key}, Skipping...`);
 			}
 		});
 
