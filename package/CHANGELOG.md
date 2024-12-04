@@ -1,5 +1,11 @@
 # astro-turnstile
 
+## 2.0.0
+
+### Major Changes
+
+- e5a7b61: Upgrade to Astro V5
+
 ## 1.2.0
 
 ### Minor Changes
