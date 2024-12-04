@@ -1,38 +1,44 @@
 ---
-import { TURNSTILE_SITE_KEY } from "astro:env/client";
-import { AstroError } from "astro/errors";
+import {TURNSTILE_SITE_KEY} from 'astro:env/client';
+import {AstroError} from 'astro/errors';
 
 export interface Props {
 	/**
 	 * Theme of the Turnstile widget as per the [Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#appearance-modes)
 	 * @default "auto"
 	 */
-	theme?: "auto" | "light" | "dark" | undefined;
+	theme?: 'auto' | 'light' | 'dark' | undefined;
 	/**
 	 * Size of the Turnstile widget as per the [Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#appearance-modes)
 	 * @default "normal"
 	 */
-	size?: "normal" | "compact" | "flexible" | undefined;
+	size?: 'normal' | 'compact' | 'flexible' | undefined;
 	/**
 	 * Margin of the Turnstile widget (CSS margin property)
 	 * @default "0.5rem"
 	 */
 	margin?: string | undefined;
+
+	/**
+	 * Label for Button
+	 * @default "Submit"
+	 */
+	buttonLabel?: string | undefined;
 }
 
-const { theme = "auto", size = "normal", margin = "0.5rem" } = Astro.props;
+const {theme = 'auto', size = 'normal', margin = '0.5rem'} = Astro.props;
 
 // Define the dimensions type for the different sizes
-type Dimensions = { height: string; width: string; minWidth: string };
+type Dimensions = {height: string; width: string; minWidth: string};
 
 // Define the sizes object with the different style settings
 type Sizes = Record<string, Dimensions>;
 
 // Define the style settings for the different sizes
 const sizes: Sizes = {
-	normal: { height: "65px", width: "300px", minWidth: "300px" },
-	flexible: { height: "65px", width: "100%", minWidth: "300px" },
-	compact: { height: "140px", width: "150px", minWidth: "150px" },
+	normal: {height: '65px', width: '300px', minWidth: '300px'},
+	flexible: {height: '65px', width: '100%', minWidth: '300px'},
+	compact: {height: '140px', width: '150px', minWidth: '150px'},
 };
 
 // Define a function to get the style settings based on set the size
@@ -48,7 +54,7 @@ const getStyleSettings = (size: string): Dimensions => {
 	// If the style settings do not exist, throw an error
 	throw new AstroError(
 		`Invalid size: ${size}`,
-		`'size' must be one of the following: ${Object.keys(sizes).join(", ")}.`,
+		`'size' must be one of the following: ${Object.keys(sizes).join(', ')}.`
 	);
 };
 
@@ -90,9 +96,7 @@ const {
 	// see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget
 	function onloadTurnstileCallback() {
 		// Get the Turnstile configuration from the Turnstile form element
-		const {dataset: TConfig} = document.getElementById(
-			'at-turnstile-captcha',
-		);
+		const {dataset: TConfig} = document.getElementById('at-turnstile-captcha');
 
 		// Render the Turnstile widget with the configuration
 		turnstile.render('#at-turnstile-captcha', {

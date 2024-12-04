@@ -1,13 +1,13 @@
 ---
-import config from "virtual:astro-turnstile/config";
-import type { HTMLAttributes } from "astro/types";
-import Widget, { type Props as WidgetProps } from "./TurnstileWidget.astro";
+import config from 'virtual:astro-turnstile/config';
+import type {HTMLAttributes} from 'astro/types';
+import Widget, {type Props as WidgetProps} from './TurnstileWidget.astro';
 
-interface Props extends WidgetProps, HTMLAttributes<"form"> {
+interface Props extends WidgetProps, HTMLAttributes<'form'> {
 	enctype?:
-		| "multipart/form-data"
-		| "application/x-www-form-urlencoded"
-		| "submit"
+		| 'multipart/form-data'
+		| 'application/x-www-form-urlencoded'
+		| 'submit'
 		| undefined;
 }
 
@@ -17,7 +17,8 @@ const {
 	margin,
 	action,
 	method,
-	enctype = "application/x-www-form-urlencoded",
+	buttonLabel = 'Submit',
+	enctype = 'application/x-www-form-urlencoded',
 	...rest
 } = Astro.props;
 
@@ -40,7 +41,9 @@ const siteUrl = Astro.site;
 	<Widget theme={theme} size={size} margin={margin} />
 
 	<slot name="buttons">
-		<button type="submit" class="at-turnstile-submit-button">Submit</button>
+		<button type="submit" class="at-turnstile-submit-button"
+			>{buttonLabel}</button
+		>
 	</slot>
 
 	<slot name="footer" />
