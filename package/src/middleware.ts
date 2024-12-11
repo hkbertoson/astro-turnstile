@@ -1,6 +1,6 @@
 import type { MiddlewareHandler } from "astro";
 
-const COMPONENT_IDENTIFIER = '<!-- Component: Turnstile -->';
+const COMPONENT_IDENTIFIER = 'data-turnstile-container';
 const TURNSTILE_SCRIPT = `
   <script 
     src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" 
@@ -9,7 +9,6 @@ const TURNSTILE_SCRIPT = `
     id="turnstile-script">
   </script>`;
 
-// Max bytes to scan for component identifier before giving up
 const MAX_SCAN_BYTES = 16384; // 16KB
 let bytesScanned = 0;
 
@@ -50,6 +49,7 @@ function createFastScriptInjectionTransform(): TransformStream<string, string> {
 
       // Fast path: haven't found component yet
       if (!hasFoundComponent) {
+        // Look for the data attribute
         if (chunk.includes(COMPONENT_IDENTIFIER)) {
           hasFoundComponent = true;
           buffer = chunk;
@@ -61,19 +61,16 @@ function createFastScriptInjectionTransform(): TransformStream<string, string> {
         buffer += chunk;
       }
 
-      // Look for </head> only if we found the component
       const headCloseIndex = buffer.indexOf('</head>');
       if (headCloseIndex === -1) {
-        // If buffer is getting too large, flush it and give up
         if (buffer.length > MAX_SCAN_BYTES) {
           controller.enqueue(buffer);
           buffer = '';
-          hasInjected = true; // Prevent further processing
+          hasInjected = true;
         }
         return;
       }
 
-      // Inject the script
       const injectedContent = 
         buffer.slice(0, headCloseIndex) + 
         TURNSTILE_SCRIPT + 
@@ -88,7 +85,6 @@ function createFastScriptInjectionTransform(): TransformStream<string, string> {
       if (buffer) {
         controller.enqueue(buffer);
       }
-      // Reset static counter for next request
       bytesScanned = 0;
     }
   });

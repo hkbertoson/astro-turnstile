@@ -25,11 +25,11 @@ const {
 const siteUrl = Astro.site;
 ---
 
-<!-- Component: Turnstile -->
 <form
 	id="at-turnstile-captcha-form"
 	data-siteurl={siteUrl}
 	data-captcha={config.endpointPath}
+	data-turnstile-container
 	action={action}
 	method={method}
 	enctype={enctype}
