@@ -1,5 +1,12 @@
 # astro-turnstile
 
+## 2.1.0
+
+### Minor Changes
+
+- 31d452f: Updated to use data attribute instead of comment
+- 9a444e1: Updated script to only inject on pages where component is rendered
+
 ## 2.0.1
 
 ### Patch Changes
