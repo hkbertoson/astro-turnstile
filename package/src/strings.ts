@@ -2,7 +2,7 @@ export const loggerStrings = {
 	setup: 'Turnstile integration setup...',
 	configSiteMissing: `Astro Config Error: 'site' is not defined, it is recommended to define 'site' in your Astro config. (https://docs.astro.build/en/reference/configuration-reference/#site)\nFalling back to 'window.location.origin'.`,
 	updateConfig: 'Updating Astro config with Turnstile environment variables...',
-	injectScript: 'Injecting Turnstile client script...',
+	injectMiddleware: 'Injecting Turnstile middleware...',
 	injectRoute: (value: string) => `Injecting Turnstile route at ${value}...`,
 	virtualImports: 'Adding Virtual Import modules...',
 	setupComplete: 'Turnstile integration setup complete.',

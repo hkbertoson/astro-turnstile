@@ -41,6 +41,7 @@ export const astroTurnstile = defineIntegration({
 						command,
 						config,
 						addDevToolbarApp,
+						addMiddleware,
 					} = params;
 
 					// Log startup message
@@ -122,16 +123,10 @@ export const astroTurnstile = defineIntegration({
 
 					// Inject the required Turnstile client-side script if not disabled
 					if (!disableClientScript) {
-						verbose && logger.info(loggerStrings.injectScript);
-						injectScript('page', `import '${name}/client'`);
+						verbose && logger.info(loggerStrings.injectMiddleware);
+						addMiddleware({entrypoint: resolve('./middleware.ts'), order: 'post'});
 					}
 
-					/*
-			
-				name: 'Astro Turnstile',
-	id: 'astro-turnstile-dev-toolbar',
-	icon: svgIcons.turnstile,
-			*/
 					// Add Development Toolbar App for Astro Turnstile testing
 					if (!disableDevToolbar) {
 						verbose && logger.info(loggerStrings.addDevToolbarApp);
@@ -163,6 +158,8 @@ export const astroTurnstile = defineIntegration({
 							'astro-turnstile:components/TurnstileForm': `import Form from '${name}/components/TurnstileForm'; export default Form;`,
 						},
 					});
+
+					
 
 					// Log completion message
 					verbose && logger.info(loggerStrings.setupComplete);
