@@ -42,6 +42,6 @@
 	"dependencies": {
 		"@matthiesenxyz/astrodtsbuilder": "^0.2.0",
 		"astro-integration-kit": "^0.17.0",
-		"vite": "^6.0.5"
+		"vite": "^6.1.0"
 	}
 }
