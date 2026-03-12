@@ -1,5 +1,19 @@
 # astro-turnstile
 
+## 3.0.0
+
+### Major Changes
+
+- e4c4434: Upgrade to Astro 6 with Vite 7 and Zod 4 compatibility. Minimum peer dependency is now `astro >=6.0.0` and Node.js >=22.12.0. Schema validation updated from `superRefine` to `refine` for Zod 4 compatibility.
+
+### Minor Changes
+
+- 45f1b44: Add extended Turnstile widget configuration options: `execution`, `appearance`, and callback props (`callback`, `errorCallback`, `expiredCallback`, `timeoutCallback`, `beforeInteractiveCallback`, `afterInteractiveCallback`, `unsupportedCallback`). Closes #230.
+
+### Patch Changes
+
+- 52a17d7: Remove `@matthiesenxyz/astrodtsbuilder` dependency. Type stubs are now generated with plain template literals, reducing the dependency footprint.
+
 ## 2.1.0
 
 ### Minor Changes
@@ -52,7 +66,6 @@
 ### Patch Changes
 
 - 05537b2: [Fix/Docs]:
-
   - Update Type `AstroTurnstileOptions` to reflect the correct default values by switching from `z.infer` to a `typeof Schema._input` which properly shows the type as it would be used by the enduser
 
   ```ts
@@ -88,7 +101,6 @@
 ### Minor Changes
 
 - a200211: [refactor components]: Simplify Logic and breakout widget into its own component.
-
   - Moved Widget to its own component that can be used with custom implementations.
   - Refactored Form component to add slots, and adjust the configuration of how logic is handled.
   - Updated API endpoint to give responses in the status text to use within the custom Form component.
@@ -110,7 +122,6 @@
 ### Minor Changes
 
 - 5dbd778: [Refactor]: Update integration logic and handling and create a reusable component
-
   - BREAKING: Minimum version of Astro is now `v4.14` due to the use of the new injectTypes helper functions.
   - NEW: Auto injection of Turnstile Client API script.
   - NEW: You can now change the endpoint path of your Astro-Turnstile install for Verifying Tokens.
