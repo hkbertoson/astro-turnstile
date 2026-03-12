@@ -7,6 +7,10 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   release:
     name: Release
@@ -23,15 +27,15 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Setup Node.js 22.x
+      - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: "pnpm"
-          registry-url: "https://registry.npmjs.org"
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
