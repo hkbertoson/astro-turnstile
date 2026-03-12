@@ -1,44 +1,94 @@
 ---
-import {TURNSTILE_SITE_KEY} from 'astro:env/client';
-import {AstroError} from 'astro/errors';
+import { TURNSTILE_SITE_KEY } from "astro:env/client";
+import { AstroError } from "astro/errors";
 
 export interface Props {
 	/**
-	 * Theme of the Turnstile widget as per the [Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#appearance-modes)
+	 * Theme of the Turnstile widget
 	 * @default "auto"
 	 */
-	theme?: 'auto' | 'light' | 'dark' | undefined;
+	theme?: "auto" | "light" | "dark" | undefined;
 	/**
-	 * Size of the Turnstile widget as per the [Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#appearance-modes)
+	 * Size of the Turnstile widget
 	 * @default "normal"
 	 */
-	size?: 'normal' | 'compact' | 'flexible' | undefined;
+	size?: "normal" | "compact" | "flexible" | undefined;
 	/**
 	 * Margin of the Turnstile widget (CSS margin property)
 	 * @default "0.5rem"
 	 */
 	margin?: string | undefined;
-
 	/**
 	 * Label for Button
 	 * @default "Submit"
 	 */
 	buttonLabel?: string | undefined;
+	/**
+	 * Execution mode - controls when the challenge runs
+	 * @default "render"
+	 */
+	execution?: "render" | "execute" | undefined;
+	/**
+	 * Appearance mode - controls when the widget is visible
+	 * @default "always"
+	 */
+	appearance?: "always" | "execute" | "interaction-only" | undefined;
+	/**
+	 * Name of a global function called on successful verification
+	 */
+	callback?: string | undefined;
+	/**
+	 * Name of a global function called on verification error
+	 */
+	errorCallback?: string | undefined;
+	/**
+	 * Name of a global function called when the token expires
+	 */
+	expiredCallback?: string | undefined;
+	/**
+	 * Name of a global function called on verification timeout
+	 */
+	timeoutCallback?: string | undefined;
+	/**
+	 * Name of a global function called before an interactive challenge
+	 */
+	beforeInteractiveCallback?: string | undefined;
+	/**
+	 * Name of a global function called after an interactive challenge
+	 */
+	afterInteractiveCallback?: string | undefined;
+	/**
+	 * Name of a global function called when the browser is unsupported
+	 */
+	unsupportedCallback?: string | undefined;
 }
 
-const {theme = 'auto', size = 'normal', margin = '0.5rem'} = Astro.props;
+const {
+	theme = "auto",
+	size = "normal",
+	margin = "0.5rem",
+	execution,
+	appearance,
+	callback,
+	errorCallback,
+	expiredCallback,
+	timeoutCallback,
+	beforeInteractiveCallback,
+	afterInteractiveCallback,
+	unsupportedCallback,
+} = Astro.props;
 
 // Define the dimensions type for the different sizes
-type Dimensions = {height: string; width: string; minWidth: string};
+type Dimensions = { height: string; width: string; minWidth: string };
 
 // Define the sizes object with the different style settings
 type Sizes = Record<string, Dimensions>;
 
 // Define the style settings for the different sizes
 const sizes: Sizes = {
-	normal: {height: '65px', width: '300px', minWidth: '300px'},
-	flexible: {height: '65px', width: '100%', minWidth: '300px'},
-	compact: {height: '140px', width: '150px', minWidth: '150px'},
+	normal: { height: "65px", width: "300px", minWidth: "300px" },
+	flexible: { height: "65px", width: "100%", minWidth: "300px" },
+	compact: { height: "140px", width: "150px", minWidth: "150px" },
 };
 
 // Define a function to get the style settings based on set the size
@@ -54,7 +104,7 @@ const getStyleSettings = (size: string): Dimensions => {
 	// If the style settings do not exist, throw an error
 	throw new AstroError(
 		`Invalid size: ${size}`,
-		`'size' must be one of the following: ${Object.keys(sizes).join(', ')}.`,
+		`'size' must be one of the following: ${Object.keys(sizes).join(", ")}.`,
 	);
 };
 
@@ -71,6 +121,15 @@ const {
 	data-sitekey={TURNSTILE_SITE_KEY}
 	data-theme={theme}
 	data-size={size}
+	data-execution={execution}
+	data-appearance={appearance}
+	data-callback={callback}
+	data-error-callback={errorCallback}
+	data-expired-callback={expiredCallback}
+	data-timeout-callback={timeoutCallback}
+	data-before-interactive-callback={beforeInteractiveCallback}
+	data-after-interactive-callback={afterInteractiveCallback}
+	data-unsupported-callback={unsupportedCallback}
 	data-turnstile-container
 >
 </div>
@@ -93,19 +152,27 @@ const {
 </style>
 
 <script is:inline>
-	// Define the onloadTurnstileCallback function as per the Turnstile documentation
-	// see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget
 	function onloadTurnstileCallback() {
-		// Get the Turnstile configuration from the Turnstile form element
-		const {dataset: TConfig} = document.getElementById(
-			'at-turnstile-captcha',
-		);
+		var el = document.getElementById('at-turnstile-captcha');
+		var d = el.dataset;
 
-		// Render the Turnstile widget with the configuration
-		turnstile.render('#at-turnstile-captcha', {
-			sitekey: TConfig.sitekey,
-			size: TConfig.size,
-			theme: TConfig.theme,
-		});
+		var config = {
+			sitekey: d.sitekey,
+			size: d.size,
+			theme: d.theme,
+		};
+
+		if (d.execution) config.execution = d.execution;
+		if (d.appearance) config.appearance = d.appearance;
+
+		if (d.callback) config.callback = window[d.callback];
+		if (d.errorCallback) config['error-callback'] = window[d.errorCallback];
+		if (d.expiredCallback) config['expired-callback'] = window[d.expiredCallback];
+		if (d.timeoutCallback) config['timeout-callback'] = window[d.timeoutCallback];
+		if (d.beforeInteractiveCallback) config['before-interactive-callback'] = window[d.beforeInteractiveCallback];
+		if (d.afterInteractiveCallback) config['after-interactive-callback'] = window[d.afterInteractiveCallback];
+		if (d.unsupportedCallback) config['unsupported-callback'] = window[d.unsupportedCallback];
+
+		turnstile.render('#at-turnstile-captcha', config);
 	}
 </script>
