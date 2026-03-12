@@ -1,8 +1,5 @@
 import { z } from "astro/zod";
 
-/**
- * Map of error messages for the endpoint path refinement function.
- */
 const endpointErrorMessages = {
 	startsWith:
 		"The endpoint path must start with a forward slash. (e.g. '/your-path')",
@@ -11,34 +8,6 @@ const endpointErrorMessages = {
 	endsWith:
 		"The endpoint path must not end with a forward slash. (e.g. '/your-path')",
 };
-
-/**
- * Super refine function for the endpoint path.
- * @param {string} arg - The value to refine.
- * @param {z.RefinementCtx} ctx - The refinement context.
- * @returns {void}
- */
-function endpointPathSuperRefine(arg: string, ctx: z.RefinementCtx): void {
-	const code = z.ZodIssueCode.custom;
-
-	if (!arg.startsWith("/"))
-		ctx.addIssue({
-			code,
-			message: `${endpointErrorMessages.startsWith} Error: ${arg}`,
-		});
-
-	if (!/^[a-zA-Z0-9\-_\/]+$/.test(arg))
-		ctx.addIssue({
-			code,
-			message: `${endpointErrorMessages.urlSafe} Error: ${arg}`,
-		});
-
-	if (arg.endsWith("/"))
-		ctx.addIssue({
-			code,
-			message: `${endpointErrorMessages.endsWith} Error: ${arg}`,
-		});
-}
 
 /**
  * Astro-Turnstile configuration options schema.
@@ -54,7 +23,24 @@ export const AstroTurnstileOptionsSchema = z
 			.string()
 			.optional()
 			.default("/verify")
-			.superRefine((arg, ctx) => endpointPathSuperRefine(arg, ctx))
+			.refine(
+				(arg) => arg.startsWith("/"),
+				(arg) => ({
+					message: `${endpointErrorMessages.startsWith} Error: ${arg}`,
+				}),
+			)
+			.refine(
+				(arg) => /^[a-zA-Z0-9\-_/]+$/.test(arg),
+				(arg) => ({
+					message: `${endpointErrorMessages.urlSafe} Error: ${arg}`,
+				}),
+			)
+			.refine(
+				(arg) => !arg.endsWith("/"),
+				(arg) => ({
+					message: `${endpointErrorMessages.endsWith} Error: ${arg}`,
+				}),
+			)
 			.describe(
 				'The path to the injected Turnstile API endpoint. (default: "/verify")',
 			),
